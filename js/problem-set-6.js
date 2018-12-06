@@ -11,8 +11,11 @@
  */
 
 function sayHello() {
+    let hello = document.getElementById('canvas1').getContext('2d');
+    hello.font = '48px sans-serif';
+    hello.strokeText('Hello, World!', 10, 50);
+  }
 
-}
 
 /*
  * Rectangle. 3 points.
@@ -38,7 +41,27 @@ function sayHello() {
  */
 
 function drawRectangle() {
+  let rectangle = document.getElementById('canvas2').getContext('2d');
+  rectangle.clearRect(0, 0, rectangle.canvas.width, rectangle.canvas.height);
 
+  do {
+    rectHeight = prompt("Enter height: ");
+  } while (rectHeight < 1);
+
+  do {
+    rectWidth = prompt("Enter width: ");
+  } while (rectWidth < 1);
+
+  do {
+    rectX = prompt("Enter x coordinate for top-left: ");
+  } while (rectX < 5);
+
+  do {
+    rectY = prompt("Enter y coordinate for top-left: ");
+  } while (rectY < 5);
+
+  rectangle.strokeRect(rectX, rectY, rectWidth, rectHeight);
+  rectangle.stroke();
 }
 
 /*
@@ -67,7 +90,46 @@ function drawRectangle() {
  */
 
 function drawColoredRectangle() {
+  let colorRectangle = document.getElementById('canvas3').getContext('2d');
 
+  colorRectangle.clearRect(0, 0, colorRectangle.canvas.width, colorRectangle.canvas.height);
+
+  let color = prompt("Enter your color: ");
+
+  if (color == "black") {
+    colorRectangle.fillStyle = "#000000";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  if (color == "blue") {
+    colorRectangle.fillStyle = "#0000ff";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  else if (color == "green") {
+    colorRectangle.fillStyle = "#00ff00";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  else if (color == "orange") {
+    colorRectangle.fillStyle = "#ffa500";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  else if (color == "purple") {
+    colorRectangle.fillStyle = "#a020f0";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  else if (color == "red") {
+    colorRectangle.fillStyle = "#ff0000";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
+
+  else if (color == "yellow") {
+    colorRectangle.fillStyle = "#ffff00";
+    colorRectangle.fillRect(10, 10, 100, 50);
+  }
 }
 
 /*
@@ -98,7 +160,6 @@ function drawColoredRectangle() {
  *     - Combinations of side lengths that would make it impossible to draw
  *       the triangle within the bounds of the canvas
  */
-
 function drawTriangle() {
 
 }
