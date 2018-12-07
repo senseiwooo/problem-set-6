@@ -91,7 +91,6 @@ function drawRectangle() {
 
 function drawColoredRectangle() {
   let colorRectangle = document.getElementById('canvas3').getContext('2d');
-
   colorRectangle.clearRect(0, 0, colorRectangle.canvas.width, colorRectangle.canvas.height);
 
   let color = prompt("Enter your color: ");
@@ -161,7 +160,40 @@ function drawColoredRectangle() {
  *       the triangle within the bounds of the canvas
  */
 function drawTriangle() {
+  let triangle = document.getElementById('canvas4').getContext('2d');
+  triangle.clearRect(0, 0, triangle.canvas.width, triangle.canvas.height);
 
+  do {
+    triangleSide1 = Number(prompt("Side 1: "));
+  } while (triangleSide1 == Number);
+
+  do {
+    triangleSide2 = Number(prompt("Side 2: "));
+  } while (triangleSide2 == Number);
+
+  do {
+    triangleSide3 = Number(prompt("Side 3: "));
+  } while (triangleSide3 == Number);
+
+  let triangleSides = [triangleSide1, triangleSide2, triangleSide3];
+  triangleSides.sort();
+
+  let smallestSide = triangleSides[0];
+  let secondLargestSide = triangleSides[1];
+  let largestSide = triangleSides[2];
+
+  if (((smallestSide)*(smallestSide) + (secondLargestSide)*(secondLargestSide) === (largestSide)*(largestSide))){
+    triangle.beginPath();
+    triangle.moveTo(10,10);
+    triangle.lineTo(10,smallestSide + 10);
+    triangle.lineTo(secondLargestSide + 10, smallestSide + 10);
+    triangle.lineTo(10,10)
+    triangle.stroke();
+    triangle.closePath();
+  }
+  else {
+    alert("Not a right triangle.");
+  }
 }
 
 /*
@@ -184,6 +216,13 @@ function drawTriangle() {
  */
 
 function drawSmileyFace() {
+  let smile = document.getElementById('canvas5').getContext('2d');
+  smile.clearRect(0, 0, smile.canvas.width, smile.canvas.height);
+
+  do {
+    radius = prompt("Enter a radius: ")
+  } while (radius > 0)
+
 
 }
 
