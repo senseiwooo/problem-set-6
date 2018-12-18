@@ -1,5 +1,5 @@
 /*
- * Hello. 2 points.
+ * Hello. 2 numberOfSides.
  *
  * Write a function that draws "Hello, World!" on the canvas. You should
  * begin drawing at [10, 50], relative to the canvas, and your text should
@@ -18,7 +18,7 @@ function sayHello() {
 
 
 /*
- * Rectangle. 3 points.
+ * Rectangle. 3 numberOfSides.
  *
  * Write a function that draws a rectangle on the canvas. You should prompt
  * the user for the height and width. You should also prompt the user for the
@@ -65,7 +65,7 @@ function drawRectangle() {
 }
 
 /*
- * Color. 3 points.
+ * Color. 3 numberOfSides.
  *
  * Write a function that draws a rectangle on the canvas. By default, the
  * rectangle will have a height and width of 50px and 100px, respectively. It
@@ -133,12 +133,12 @@ function drawColoredRectangle() {
 }
 
 /*
- * Triangle. 5 points.
+ * Triangle. 5 numberOfSides.
  *
  * Write a function that draws a right triangle on the canvas. The triangle
  * should be outlined only, not filled. You'll need to prompt the user for the
  * lengths of each of the sides. By default, position your triangle so that
- * its leftmost and topmost points have X- and Y-coordinates of 10.
+ * its leftmost and topmost numberOfSides have X- and Y-coordinates of 10.
  *
  * When drawing your right triangles, the left side shall be designated as the
  * first side and will be smallest of the three side lengths. The bottom side
@@ -198,7 +198,7 @@ function drawTriangle() {
 }
 
 /*
- * Smile. 7 points.
+ * Smile. 7 numberOfSides.
  *
  * Write a function that draws a smiley face on the canvas. The head should
  * be a perfect circle with a radius specified by the user. The eyes should
@@ -256,12 +256,12 @@ function drawSmileyFace() {
 
 
 /*
- * Star. 9 points.
+ * Star. 9 numberOfSides.
  *
  * Write a function that draws a five-point star on the canvas. Prompt the
  * user for the outer radius (i.e., a circle that would connect each of the
- * star's outer points) and inner radius (i.e., a circle that would connect
- * each of the star's inner points). The center of the star should be placed
+ * star's outer numberOfSides) and inner radius (i.e., a circle that would connect
+ * each of the star's inner numberOfSides). The center of the star should be placed
  * at [125, 125].
  *
  * You'll need to use the appropriate Canvas API methods to do this. If you're
@@ -312,7 +312,7 @@ function drawStar() {
   }
 }
 /*
- * Stop Sign. 7 points.
+ * Stop Sign. 7 numberOfSides.
  *
  * Write a function that draws a stop sign. The stop sign should be outlined
  * in black, but filled red. At the center of the stop sign, the same height
@@ -327,32 +327,42 @@ function drawStar() {
  */
 
 function drawStopSign() {
- let stop = document.getElementById('canvas7').getContext('2d');
- stop.clearRect(0, 0, stop.canvas.width, stop.canvas.height);
+  let stop = document.getElementById('canvas7').getContext('2d');
+  stop.clearRect(0, 0, stop.canvas.width, stop.canvas.height);
 
-  let numberOfSides = 8;
-  let sideLength = 80;
-  let xCenter = 10+(sideLength)/2+sideLength/Math.sqrt(2);
-  let yCenter = 10+(sideLength/2)+(sideLength/Math.sqrt(2));
-  let rotation = Math.PI/8;
+  let sideLength=80;
+  let center=[10+(sideLength)/2+sideLength/Math.sqrt(2), 10+(sideLength/2)+(sideLength/Math.sqrt(2))]
+  let numberOfSides=8;
+  let xPoints=[];
+  let yPoints=[];
 
-  stop.beginPath();
-  stop.moveTo(xCenter+sideLength*Math.cos(0+rotation), yCenter+sideLength*Math.sin(0+rotation));
-
-  for (let i = 1; i <= numberOfSides; i += 1) {
-    stop.lineTo(xCenter + sideLength * (Math.cos(rotation + (i * 2 * Math.PI) / numberOfSides)), yCenter + sideLength * Math.sin(rotation + (i * 2 * Math.PI / numberOfSides)));
+  for(let i=0;i<numberOfSides;i++){
+    xPoints.push(Math.cos(((Math.PI*2*i)/numberOfSides)-Math.PI/8)*100+center[0]);
+    yPoints.push(Math.sin(((Math.PI*2*i)/numberOfSides)-Math.PI/8)*100+center[1]);
   }
-  stop.closePath();
+  stop.beginPath();
+  stop.moveTo([xPoints][0], yPoints[0]);
+  for(let j=0;j<xPoints.length;j++){
+    stop.lineTo(xPoints[j], yPoints[j]);
+  }
+  stop.lineTo(xPoints[0], yPoints[0]);
   stop.stroke();
+
   stop.fillStyle="red";
   stop.fill();
+  stop.closePath();
+  stop.beginPath();
+  stop.textAlign="center";
+  stop.font="56px sans-serif";
   stop.fillStyle="white";
-  stop.font = '65px sans-serif';
-  stop.fillText('STOP', 18, 73+40*Math.sqrt(2));
-}
+  stop.fillText("STOP", center[0], center[1]+15);
+  stop.closePath()
+
+ }
+
 
 /*
- * Pyramid. 7 points.
+ * Pyramid. 7 numberOfSides.
  *
  * Write a function that draws a block pyramid, where the user specifies the
  * side length of each block. By default, we'll draw a pyramid with a base
@@ -369,12 +379,38 @@ function drawStopSign() {
  * should do in these instances.
  */
 
-function drawPyramid() {
+ function drawPyramid() {
+  let pyramid = document.getElementById('canvas8').getContext('2d');
+  pyramid.clearRect(0, 0, pyramid.canvas.width, pyramid.canvas.height);
 
+  let sideLength = Number(prompt("Enter side length."));
+
+  if (isNaN(sideLength) == true) {
+    alert("invalid Input(s). Try again.");
+  }
+
+  else {
+    let x = 10;
+    let y = pyramid.canvas.height - 10;
+    let i = 0;
+    lineNumber = 1;
+
+    while(i < 5){
+      for(let j = lineNumber; j <= 5; j++){
+        pyramid.strokeRect(x, y - sideLength, sideLength, sideLength);
+        x += sideLength;
+      }
+
+      x = 10 + (sideLength / 2) * lineNumber;
+      y -= sideLength;
+      lineNumber++;
+      i++;
+    }
+  }
 }
 
 /*
- * House. 7 points.
+ * house. 7 numberOfSides.
  *
  * Write a function that draws a two-story house. The house should have a
  * rectangular frame, a front door, two square windows on the first floor,
@@ -403,5 +439,93 @@ function drawPyramid() {
  */
 
 function drawHouse() {
+  let house = document.getElementById('canvas9').getContext('2d');
+  house.clearRect(0, 0, house.canvas.width, house.canvas.height);
+
+  let houseColor= prompt("Choose a house color.");
+  let doorColor= prompt("Choose a door color.");
+
+  house.beginPath();
+  house.moveTo(150,350);
+  house.lineTo(750,350);
+  house.lineTo(450,100);
+  house.lineTo(150,350);
+  house.closePath();
+  house.fillStyle ="#808080";
+  house.fill();
+  house.closePath();
+
+  if(houseColor==="brown"){
+    houseColor="#654500";
+  }
+  else if(houseColor==="blue"){
+    houseColor="#0000FF";
+  }
+  else if(houseColor==="green"){
+    houseColor="#00FF40";
+  }
+  else if(houseColor==="orange"){
+    houseColor="#FF8000";
+  }
+  else if(houseColor==="purple"){
+    houseColor="#8000FF";
+  }
+  else if(houseColor==="red"){
+    houseColor="#FF0000";
+  }
+  else if(houseColor==="yellow"){
+    houseColor="#FFFF00";
+  }
+
+  house.fillStyle = houseColor;
+  house.fillRect(150, 350, 600, 500);
+
+   if(doorColor==="brown"){
+     doorColor="#654500";
+   }
+   else if(doorColor==="blue"){
+     doorColor="#0000FF";
+   }
+   else if(doorColor==="green"){
+     doorColor="#00FF40";
+   }
+   else if(doorColor==="orange"){
+     doorColor="#FF8000";
+   }
+   else if(doorColor==="purple"){
+     doorColor="#8000FF";
+   }
+   else if(doorColor==="red"){
+     doorColor="#FF0000";
+   }
+   else if(doorColor==="yellow"){
+     doorColor="#FFFF00";
+   }
+
+   house.fillStyle = doorColor;
+   house.fillRect(400, 620, 100, 150);
+
+   let windowColor="#B7E9FF"
+   house.fillStyle = windowColor;
+   house.fillRect(250, 400, 75, 75);
+
+   let window2Color="#B7E9FF"
+   house.fillStyle = window2Color;
+   house.fillRect(575, 400, 75, 75);
+
+   let window3Color="#B7E9FF"
+   house.fillStyle = window3Color;
+   house.fillRect(250, 620, 75, 75);
+
+   let window4Color="#B7E9FF"
+   house.fillStyle = window4Color;
+   house.fillRect(575, 620, 75, 75);
+
+   let doorknobColor= "#B7E9FF"
+   house.fillStyle = doorknobColor;
+   house.fill();
+   house.beginPath();
+   house.arc(480,695,5,0,2*Math.PI);
+   house.stroke();
 
 }
