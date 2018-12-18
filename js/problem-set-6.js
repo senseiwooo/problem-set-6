@@ -53,14 +53,14 @@ function drawRectangle() {
   } while (rectWidth < 1);
 
   do {
-    rectX = prompt("Enter x coordinate for top-left: ");
-  } while (rectX < 5);
+    restop = prompt("Enter x coordinate for top-left: ");
+  } while (restop < 5);
 
   do {
     rectY = prompt("Enter y coordinate for top-left: ");
   } while (rectY < 5);
 
-  rectangle.strokeRect(rectX, rectY, rectWidth, rectHeight);
+  rectangle.strokeRect(restop, rectY, rectWidth, rectHeight);
   rectangle.stroke();
 }
 
@@ -129,6 +129,7 @@ function drawColoredRectangle() {
     colorRectangle.fillStyle = "#ffff00";
     colorRectangle.fillRect(10, 10, 100, 50);
   }
+
 }
 
 /*
@@ -218,13 +219,41 @@ function drawTriangle() {
 function drawSmileyFace() {
   let smile = document.getElementById('canvas5').getContext('2d');
   smile.clearRect(0, 0, smile.canvas.width, smile.canvas.height);
+  let radius;
 
   do {
     radius = prompt("Enter a radius: ")
-  } while (radius > 0)
+  } while (radius>=1 && radius<=smile.canvas.width && Number.isInteger(radius));
+
+  let x = smile.canvas.width;
+  let y = smile.canvas.height;
+  let eyeRadius = (radius*0.1);
+  let mouthRadius = (radius*0.7);
+
+  smile.beginPath();
+  smile.arc(x/2, y/2, radius, 0, Math.PI*2);
+  smile.stroke();
+  smile.closePath();
+
+  smile.beginPath();
+  smile.arc(x/2-radius/3, y/2-radius/4, eyeRadius, 0, Math.PI*2);
+  smile.stroke();
+  smile.closePath();
+
+  smile.beginPath();
+  smile.arc(x/2+radius/3, y/2-radius/4, eyeRadius, 0, Math.PI*2);
+  smile.stroke();
+  smile.closePath();
+
+  smile.beginPath();
+  smile.arc(x/2, y/2, mouthRadius, 0, Math.PI);
+  smile.stroke();
+  smile.closePath();
+
+  }
 
 
-}
+
 
 /*
  * Star. 9 points.
@@ -245,9 +274,43 @@ function drawSmileyFace() {
  */
 
 function drawStar() {
+  let star = document.getElementById('canvas6').getContext('2d');
+  star.clearRect(0, 0, star.canvas.width, star.canvas.height);
 
+  let outerRadius = Number(prompt("Enter outer radius:"));
+  let innerRadius = Number(prompt("Enter inner radius:"));
+
+  if(isNaN(outerRadius) == true || isNaN(innerRadius) == true) {
+    alert("One of your inputs is not a number.");
+  }
+
+  else if(outerRadius < 2){
+    alert("Your outer radius is too small.");
+  }
+
+  else if(innerRadius < 1){
+    alert("Your inner radius is too small.");
+  }
+
+  else if(innerRadius >= outerRadius){
+    alert("Your outer radius must be larger than your inner radius.");
+  }
+
+  else {
+    star.beginPath();
+    star.moveTo(125, 125 - outerRadius);
+    let angle = 0;
+
+    for (let i=0; i<=5; i++) {
+        star.lineTo(Math.round((Math.cos(Math.PI*(angle-90)/180)*outerRadius)+125), Math.round((Math.sin(Math.PI*(angle-90)/180)*outerRadius))+125);
+        angle += 36;
+        star.lineTo(Math.round((Math.cos(Math.PI*(angle-90)/180)*innerRadius)+125), Math.round((Math.sin(Math.PI*(angle-90)/180)*innerRadius))+125);
+        angle += 36;
+    }
+    star.stroke();
+    star.closePath();
+  }
 }
-
 /*
  * Stop Sign. 7 points.
  *
@@ -264,7 +327,28 @@ function drawStar() {
  */
 
 function drawStopSign() {
+ let stop = document.getElementById('canvas7').getContext('2d');
+ stop.clearRect(0, 0, stop.canvas.width, stop.canvas.height);
 
+  let numberOfSides = 8;
+  let sideLength = 80;
+  let xCenter = 10+(sideLength)/2+sideLength/Math.sqrt(2);
+  let yCenter = 10+(sideLength/2)+(sideLength/Math.sqrt(2));
+  let rotation = Math.PI/8;
+
+  stop.beginPath();
+  stop.moveTo(xCenter+sideLength*Math.cos(0+rotation), yCenter+sideLength*Math.sin(0+rotation));
+
+  for (let i = 1; i <= numberOfSides; i += 1) {
+    stop.lineTo(xCenter + sideLength * (Math.cos(rotation + (i * 2 * Math.PI) / numberOfSides)), yCenter + sideLength * Math.sin(rotation + (i * 2 * Math.PI / numberOfSides)));
+  }
+  stop.closePath();
+  stop.stroke();
+  stop.fillStyle="red";
+  stop.fill();
+  stop.fillStyle="white";
+  stop.font = '65px sans-serif';
+  stop.fillText('STOP', 18, 73+40*Math.sqrt(2));
 }
 
 /*
